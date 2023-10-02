@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "theatre_art")
+@Table(name = "theatre_arts")
 public class TheatreArt extends BaseEntity{
 
     @Column(name = "title")

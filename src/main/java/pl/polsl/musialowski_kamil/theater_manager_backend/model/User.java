@@ -3,6 +3,8 @@ package pl.polsl.musialowski_kamil.theater_manager_backend.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
+import java.util.Date;
+
 @MappedSuperclass
 public class User extends BaseEntity {
 
@@ -24,13 +26,17 @@ public class User extends BaseEntity {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "birthday")
+    private Date birthday;
+
     public User(Long id,
                 String firstName1,
                 String firstName2,
                 String lastName,
                 String mail,
                 String password,
-                String phoneNumber) {
+                String phoneNumber,
+                Date birthday) {
         super(id);
         this.firstName1 = firstName1;
         this.firstName2 = firstName2;
@@ -38,6 +44,10 @@ public class User extends BaseEntity {
         this.mail = mail;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.birthday = birthday;
+    }
+
+    public User() {
     }
 
     public String getFirstName1() {
@@ -86,5 +96,13 @@ public class User extends BaseEntity {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }
