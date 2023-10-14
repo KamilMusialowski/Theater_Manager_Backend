@@ -1,49 +1,43 @@
-package pl.polsl.musialowski_kamil.theater_manager_backend.model;
+package pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos;
 
-import jakarta.persistence.*;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.enums.Sex;
 
-import java.util.Date;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "app_users")
-public class User extends BaseEntity {
-
-    @Column(name = "first_name_1", nullable = false, length = 40)
+/**
+ * DTO for {@link pl.polsl.musialowski_kamil.theater_manager_backend.model.User}
+ */
+public class UserAllDto implements Serializable {
+    private Long id;
     private String firstName1;
-
-    @Column(name = "first_name_2", length = 40)
     private String firstName2;
-
-    @Column(name = "last_name", nullable = false, length = 80)
     private String lastName;
-
-    @Column(name = "email", nullable = false, length = 80)
     private String email;
-
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    @Column(name = "phone_number", length = 9)
     private String phoneNumber;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "sex", nullable = false, length = 10)
     private Sex sex;
+    private String token;
 
-    public User() {
+    public UserAllDto() {
     }
 
-    public User(Long id, String firstName1, String firstName2, String lastName, String email,
-                String password, String phoneNumber, Sex sex) {
-        super(id);
+    public UserAllDto(Long id, String firstName1, String firstName2, String lastName, String email,
+                      String phoneNumber, Sex sex, String token) {
+        this.id = id;
         this.firstName1 = firstName1;
         this.firstName2 = firstName2;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
         this.phoneNumber = phoneNumber;
         this.sex = sex;
+        this.token = token;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName1() {
@@ -78,14 +72,6 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -100,5 +86,13 @@ public class User extends BaseEntity {
 
     public void setSex(Sex sex) {
         this.sex = sex;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

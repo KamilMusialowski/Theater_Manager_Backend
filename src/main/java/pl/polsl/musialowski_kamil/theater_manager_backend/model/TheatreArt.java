@@ -10,16 +10,16 @@ import java.util.List;
 @Table(name = "theatre_art")
 public class TheatreArt extends BaseEntity{
 
-    @Column(name = "title")
+    @Column(name = "title", length = 80)
     private String title;
 
-    @Column(name = "author_1")
+    @Column(name = "author_1", length = 80)
     private String author1;
 
-    @Column(name = "author_2")
+    @Column(name = "author_2", length = 80)
     private String author2;
 
-    @Column(name = "author_3")
+    @Column(name = "author_3", length = 80)
     private String author3;
 
 //    private List<pl.polsl.musialowski_kamil.theater_manager_backend.model.Director>
