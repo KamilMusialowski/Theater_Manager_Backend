@@ -1,9 +1,10 @@
 package pl.polsl.musialowski_kamil.theater_manager_backend.model;
 
 import jakarta.persistence.*;
-import pl.polsl.musialowski_kamil.theater_manager_backend.model.enums.Sex;
+import pl.polsl.musialowski_kamil.theater_manager_backend.model.enums.SexEnum;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "app_users")
@@ -29,13 +30,23 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sex", nullable = false, length = 10)
-    private Sex sex;
+    private SexEnum sex;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "system_roles_to_users", joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "system_role_id"))
+    private Set<SystemRole> systemRoles = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inputingUser")
+    private Set<TheatreArt> inputedArts = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "involvedUser")
+    private Set<ArtInvolvedPersonel> involvedArts = new HashSet<>();
 
     public User() {
     }
 
-    public User(Long id, String firstName1, String firstName2, String lastName, String email,
-                String password, String phoneNumber, Sex sex) {
+    public User(Long id, String firstName1, String firstName2, String lastName, String email, String password, String phoneNumber, SexEnum sex, Set<SystemRole> systemRoles) {
         super(id);
         this.firstName1 = firstName1;
         this.firstName2 = firstName2;
@@ -44,6 +55,7 @@ public class User extends BaseEntity {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.sex = sex;
+        this.systemRoles = systemRoles;
     }
 
     public String getFirstName1() {
@@ -94,11 +106,19 @@ public class User extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public Sex getSex() {
+    public SexEnum getSex() {
         return sex;
     }
 
-    public void setSex(Sex sex) {
+    public void setSex(SexEnum sex) {
         this.sex = sex;
+    }
+
+    public Set<SystemRole> getSystemRoles() {
+        return systemRoles;
+    }
+
+    public void setSystemRoles(Set<SystemRole> systemRoles) {
+        this.systemRoles = systemRoles;
     }
 }

@@ -1,10 +1,9 @@
 package pl.polsl.musialowski_kamil.theater_manager_backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "theatre_art")
@@ -22,16 +21,21 @@ public class TheatreArt extends BaseEntity{
     @Column(name = "author_3", length = 80)
     private String author3;
 
-//    private List<pl.polsl.musialowski_kamil.theater_manager_backend.model.Director>
-//            directorsList;
-//
-//    private List<pl.polsl.musialowski_kamil.theater_manager_backend.model.Character>
-//            charactersList;
+    @ManyToOne
+    @JoinColumn(name = "app_user")
+    private User inputingUser;
 
-    //private List<Act> actsList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
+    private Set<EventReservations> eventReservations = new HashSet<>();
 
-    //private List<Play> playsList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
+    private Set<ArtInvolvedPersonel> involvedUsers = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
+    private Set<Act> acts = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
+    private Set<TheatreCharacter> characters = new HashSet<>();
 
     public TheatreArt() {
     }

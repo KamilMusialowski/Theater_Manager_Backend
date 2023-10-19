@@ -1,6 +1,6 @@
 package pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos;
 
-import pl.polsl.musialowski_kamil.theater_manager_backend.model.enums.Sex;
+import pl.polsl.musialowski_kamil.theater_manager_backend.model.enums.SexEnum;
 
 import java.io.Serializable;
 
@@ -14,14 +14,14 @@ public class UserAllDto implements Serializable {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private Sex sex;
+    private SexEnum sex;
     private String token;
 
     public UserAllDto() {
     }
 
     public UserAllDto(Long id, String firstName1, String firstName2, String lastName, String email,
-                      String phoneNumber, Sex sex, String token) {
+                      String phoneNumber, SexEnum sex, String token) {
         this.id = id;
         this.firstName1 = firstName1;
         this.firstName2 = firstName2;
@@ -80,11 +80,11 @@ public class UserAllDto implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Sex getSex() {
+    public SexEnum getSex() {
         return sex;
     }
 
-    public void setSex(Sex sex) {
+    public void setSex(SexEnum sex) {
         this.sex = sex;
     }
 

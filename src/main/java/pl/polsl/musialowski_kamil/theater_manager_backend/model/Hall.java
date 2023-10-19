@@ -2,6 +2,9 @@ package pl.polsl.musialowski_kamil.theater_manager_backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "theatres_halls")
 public class Hall extends BaseEntity {
@@ -15,4 +18,7 @@ public class Hall extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "theatre")
     private Theatre theatre;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hall")
+    private Set<EventReservations> eventReservations = new HashSet<>();
 }
