@@ -1,8 +1,10 @@
 package pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos;
 
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.systemRoleDtos.SystemRoleDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.enums.SexEnum;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * DTO for {@link pl.polsl.musialowski_kamil.theater_manager_backend.model.User}
@@ -16,12 +18,12 @@ public class UserAllDto implements Serializable {
     private String phoneNumber;
     private SexEnum sex;
     private String token;
+    private Set<SystemRoleDto> systemRoleDtos = null;
 
     public UserAllDto() {
     }
 
-    public UserAllDto(Long id, String firstName1, String firstName2, String lastName, String email,
-                      String phoneNumber, SexEnum sex, String token) {
+    public UserAllDto(Long id, String firstName1, String firstName2, String lastName, String email, String phoneNumber, SexEnum sex, String token, Set<SystemRoleDto> systemRoleDtos) {
         this.id = id;
         this.firstName1 = firstName1;
         this.firstName2 = firstName2;
@@ -30,6 +32,7 @@ public class UserAllDto implements Serializable {
         this.phoneNumber = phoneNumber;
         this.sex = sex;
         this.token = token;
+        this.systemRoleDtos = systemRoleDtos;
     }
 
     public Long getId() {
@@ -94,5 +97,13 @@ public class UserAllDto implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Set<SystemRoleDto> getSystemRoleDtos() {
+        return systemRoleDtos;
+    }
+
+    public void setSystemRoleDtos(Set<SystemRoleDto> systemRoleDtos) {
+        this.systemRoleDtos = systemRoleDtos;
     }
 }

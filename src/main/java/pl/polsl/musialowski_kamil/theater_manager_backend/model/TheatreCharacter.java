@@ -21,7 +21,7 @@ public class TheatreCharacter extends BaseEntity {
     private Set<Scene> scenes = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "theatre_art")
+    @JoinColumn(name = "theatre_art_id", nullable = false)
     private TheatreArt theatreArt;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")

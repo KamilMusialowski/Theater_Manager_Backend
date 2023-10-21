@@ -1,6 +1,5 @@
 package pl.polsl.musialowski_kamil.theater_manager_backend.controllers;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

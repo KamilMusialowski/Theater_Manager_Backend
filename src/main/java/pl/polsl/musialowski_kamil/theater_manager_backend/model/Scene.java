@@ -13,7 +13,7 @@ public class Scene extends BaseEntity {
     private Integer number;
 
     @ManyToOne
-    @JoinColumn(name = "act")
+    @JoinColumn(name = "act_id", nullable = false)
     private Act act;
 
     @ManyToMany(fetch = FetchType.EAGER)

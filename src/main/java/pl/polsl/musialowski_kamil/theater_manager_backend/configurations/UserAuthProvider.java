@@ -43,7 +43,7 @@ public class UserAuthProvider {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
         UserAllDto userAllDto = new UserAllDto(null, decodedJWT.getClaim("firstName").asString(), null,
-                decodedJWT.getClaim("lastName").asString(), decodedJWT.getIssuer(), null, null, null);
+                decodedJWT.getClaim("lastName").asString(), decodedJWT.getIssuer(), null, null, null, null);
         return new UsernamePasswordAuthenticationToken(userAllDto, null, Collections.emptyList());
     }
 }

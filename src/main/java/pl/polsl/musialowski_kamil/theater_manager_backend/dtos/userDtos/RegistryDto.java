@@ -1,5 +1,6 @@
 package pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos;
 
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.systemRoleDtos.SystemRoleDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.enums.SexEnum;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import java.io.Serializable;
  * DTO for {@link pl.polsl.musialowski_kamil.theater_manager_backend.model.User}
  */
 public record RegistryDto(String firstName1, String firstName2, String lastName, String email, String password,
-                          String phoneNumber, SexEnum sex) implements Serializable {
+                          String phoneNumber, SexEnum sex, SystemRoleDto[] systemRoles) implements Serializable {
 }
 
 //public class RegistryDto {

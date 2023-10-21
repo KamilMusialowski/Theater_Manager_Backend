@@ -16,7 +16,7 @@ public class Hall extends BaseEntity {
     private Integer capacity;
 
     @ManyToOne
-    @JoinColumn(name = "theatre")
+    @JoinColumn(name = "theatre_id", nullable = false)
     private Theatre theatre;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hall")

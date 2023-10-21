@@ -22,14 +22,14 @@ public class TheatreArt extends BaseEntity{
     private String author3;
 
     @ManyToOne
-    @JoinColumn(name = "app_user")
+    @JoinColumn(name = "inputing_user_id", nullable = false)
     private User inputingUser;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
     private Set<EventReservations> eventReservations = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
-    private Set<ArtInvolvedPersonel> involvedUsers = new HashSet<>();
+    private Set<ArtInvolvedPersonel> involvedPersonel = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
     private Set<Act> acts = new HashSet<>();

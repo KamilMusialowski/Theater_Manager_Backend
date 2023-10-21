@@ -10,18 +10,18 @@ import jakarta.persistence.Table;
 public class ArtInvolvedPersonel extends BaseEntity{
 
     @ManyToOne
-    @JoinColumn(name = "theatre_art")
+    @JoinColumn(name = "theatre_art_id", nullable = false)
     private TheatreArt theatreArt;
 
     @ManyToOne
-    @JoinColumn(name = "involved_user")
+    @JoinColumn(name = "user_id", nullable = false)
     private User involvedUser;
 
     @ManyToOne
-    @JoinColumn(name = "role")
+    @JoinColumn(name = "role_id", nullable = false)
     private SystemRole role;
 
     @ManyToOne
-    @JoinColumn(name = "character")
+    @JoinColumn(name = "character_id")
     private TheatreCharacter character;
 }
