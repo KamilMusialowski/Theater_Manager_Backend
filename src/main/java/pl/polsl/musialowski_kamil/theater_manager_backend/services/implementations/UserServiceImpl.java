@@ -9,13 +9,17 @@ import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos.Registry
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos.UserAllDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.exceptions.AppException;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.UserMapper;
+import pl.polsl.musialowski_kamil.theater_manager_backend.model.SystemRole;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.User;
 import pl.polsl.musialowski_kamil.theater_manager_backend.repositories.UserRepository;
 import pl.polsl.musialowski_kamil.theater_manager_backend.services.SystemRoleService;
 import pl.polsl.musialowski_kamil.theater_manager_backend.services.UserService;
 
 import java.nio.CharBuffer;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,13 +54,26 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(registryDto.password())));
 
-        user.setSystemRoles(user.getSystemRoles().stream()
-                .distinct()
-                .peek(systemRoleService::saveRolesForUser)
-                .collect(Collectors.toSet()));
+        Set<SystemRole> test = user.getSystemRoles();
+        Set<SystemRole> newSet = new HashSet<>();
+
+        Iterator<SystemRole> it = test.iterator();
+
+        while(it.hasNext()) {
+            SystemRole sr = this.systemRoleService.saveRolesForUser(it.next());
+            newSet.add(sr);
+        }
+
+        user.setSystemRoles(newSet);
 
         User savedUser = userRepository.save(user);
         return userMapper.toUserDto(savedUser);
+    }
+
+    @Override
+    public Set<User> getUsers() {
+        Set<User> users = new HashSet<>(this.userRepository.findAll());
+        return users;
     }
 
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, SystemRoleService systemRoleService) {

@@ -48,6 +48,9 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private Set<EventReservations> events = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<TheatrePersonel> theatresPositions = new HashSet<>();
+
     public User() {
     }
 
@@ -125,5 +128,37 @@ public class User extends BaseEntity {
 
     public void setSystemRoles(Set<SystemRole> systemRoles) {
         this.systemRoles = systemRoles;
+    }
+
+    public Set<TheatreArt> getInputedArts() {
+        return inputedArts;
+    }
+
+    public void setInputedArts(Set<TheatreArt> inputedArts) {
+        this.inputedArts = inputedArts;
+    }
+
+    public Set<ArtInvolvedPersonel> getInvolvedArts() {
+        return involvedArts;
+    }
+
+    public void setInvolvedArts(Set<ArtInvolvedPersonel> involvedArts) {
+        this.involvedArts = involvedArts;
+    }
+
+    public Set<EventReservations> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<EventReservations> events) {
+        this.events = events;
+    }
+
+    public Set<TheatrePersonel> getTheatresPositions() {
+        return theatresPositions;
+    }
+
+    public void setTheatresPositions(Set<TheatrePersonel> theatresPositions) {
+        this.theatresPositions = theatresPositions;
     }
 }

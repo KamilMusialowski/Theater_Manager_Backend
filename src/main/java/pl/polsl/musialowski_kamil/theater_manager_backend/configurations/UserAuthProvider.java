@@ -30,7 +30,7 @@ public class UserAuthProvider {
         Date now = new Date();
         Date validity = new Date(now.getTime() + 3_600_000);
         return JWT.create()
-                .withIssuer(userAllDto.getEmail())
+                .withSubject(userAllDto.getEmail())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .withClaim("firstName", userAllDto.getFirstName1())
@@ -43,7 +43,7 @@ public class UserAuthProvider {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
         UserAllDto userAllDto = new UserAllDto(null, decodedJWT.getClaim("firstName").asString(), null,
-                decodedJWT.getClaim("lastName").asString(), decodedJWT.getIssuer(), null, null, null, null);
+                decodedJWT.getClaim("lastName").asString(), decodedJWT.getSubject(), null, null, null, null);
         return new UsernamePasswordAuthenticationToken(userAllDto, null, Collections.emptyList());
     }
 }

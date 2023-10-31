@@ -18,7 +18,7 @@ public class UserAllDto implements Serializable {
     private String phoneNumber;
     private SexEnum sex;
     private String token;
-    private Set<SystemRoleDto> systemRoleDtos = null;
+    private Set<SystemRoleDto> systemRoles = null;
 
     public UserAllDto() {
     }
@@ -32,7 +32,7 @@ public class UserAllDto implements Serializable {
         this.phoneNumber = phoneNumber;
         this.sex = sex;
         this.token = token;
-        this.systemRoleDtos = systemRoleDtos;
+        this.systemRoles = systemRoleDtos;
     }
 
     public Long getId() {
@@ -99,11 +99,11 @@ public class UserAllDto implements Serializable {
         this.token = token;
     }
 
-    public Set<SystemRoleDto> getSystemRoleDtos() {
-        return systemRoleDtos;
+    public Set<SystemRoleDto> getSystemRoles() {
+        return systemRoles;
     }
 
-    public void setSystemRoleDtos(Set<SystemRoleDto> systemRoleDtos) {
-        this.systemRoleDtos = systemRoleDtos;
+    public void setSystemRoles(Set<SystemRoleDto> systemRoles) {
+        this.systemRoles = systemRoles;
     }
 }
