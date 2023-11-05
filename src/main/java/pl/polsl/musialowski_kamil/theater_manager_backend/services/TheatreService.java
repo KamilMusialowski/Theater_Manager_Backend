@@ -5,6 +5,7 @@ import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.Creat
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreCreateDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreDirectorDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
 
 import java.util.Set;
 
@@ -13,4 +14,6 @@ public interface TheatreService {
     CreatedTheatreDto create(Long creatorId, TheatreCreateDto theatreCreateDto);
 
     Set<TheatresListDto> getTheatersOfManager(Long managerId);
+
+    TheatrePersonelDto addPersonel(String email, Long theaterId, String role);
 }

@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.CreatedTheatreDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.TheaterPersonelDataModels.TPersonelAddModel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.TheatreDataModels.TheatreCreateModel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.services.TheatreService;
 
@@ -33,4 +35,11 @@ public class TheatreControler {
         Set<TheatresListDto> managersTheaters = theatreService.getTheatersOfManager(managerId);
         return ResponseEntity.ok(managersTheaters);
     }
+
+    @PostMapping("/addPersonel")
+    public ResponseEntity<TheatrePersonelDto> addTheatrePersonel(@RequestBody TPersonelAddModel tPersonelAddModel) {
+        TheatrePersonelDto addedPersonel = theatreService.addPersonel(tPersonelAddModel.personelEmail(), tPersonelAddModel.theaterId(), tPersonelAddModel.role());
+        return ResponseEntity.ok(addedPersonel);
+    }
+
 }

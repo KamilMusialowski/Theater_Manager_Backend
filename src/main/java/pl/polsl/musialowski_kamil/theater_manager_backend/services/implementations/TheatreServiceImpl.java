@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.CreatedTheatreDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreCreateDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.TheatreMapper;
+import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.TheatrePersonelMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.Theatre;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.TheatrePersonel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.User;
@@ -27,16 +29,17 @@ public class TheatreServiceImpl implements TheatreService {
     private final TheaterRepository theaterRepository;
     private final TheatrePersonelRepository theatrePersonelRepository;
     private final TheatreMapper theatreMapper;
+    private final TheatrePersonelMapper theatrePersonelMapper;
 
-    public TheatreServiceImpl(UserRepository userRepository,
-                              TheaterRepository theaterRepository,
-                              TheatrePersonelRepository theatrePersonelRepository,
-                              TheatreMapper theatreMapper) {
+    public TheatreServiceImpl(UserRepository userRepository, TheaterRepository theaterRepository, TheatrePersonelRepository theatrePersonelRepository, TheatreMapper theatreMapper, TheatrePersonelMapper theatrePersonelMapper) {
         this.userRepository = userRepository;
         this.theaterRepository = theaterRepository;
         this.theatrePersonelRepository = theatrePersonelRepository;
         this.theatreMapper = theatreMapper;
+        this.theatrePersonelMapper = theatrePersonelMapper;
     }
+
+
 
     @Override
     public CreatedTheatreDto create(Long creatorId, TheatreCreateDto theatreCreateDto) {
@@ -63,5 +66,23 @@ public class TheatreServiceImpl implements TheatreService {
                 .map(theatreMapper::toTheatresListDto)
                 .collect(Collectors.toSet());
         return theatersDtos;
+    }
+
+    @Override
+    public TheatrePersonelDto addPersonel(String email, Long theaterId, String role) {
+        Optional<User> personelOptional = userRepository.findByEmail(email);
+        User user = null;
+        if (personelOptional.isPresent()) {
+            user = personelOptional.get();
+        }
+        Optional<Theatre> theatreOptional = theaterRepository.getTheatreById(theaterId);
+        Theatre theater = null;
+        if (theatreOptional.isPresent()) {
+            theater = theatreOptional.get();
+        }
+
+        TheatrePersonel theatrePersonel = new TheatrePersonel(user, theater, SystemRoleEnum.valueOf(role));
+        TheatrePersonelDto theatrePersonelDto = new TheatrePersonelDto(theatrePersonel.getUser().getEmail(), theatrePersonel.getTheatre().getName(), theatrePersonel.getRoleEnum());
+        return theatrePersonelDto;
     }
 }
