@@ -16,15 +16,15 @@ public class EventReservations extends BaseEntity {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event_type_id")
     private EventType eventType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "theatre_art_id")
     private TheatreArt theatreArt;
 

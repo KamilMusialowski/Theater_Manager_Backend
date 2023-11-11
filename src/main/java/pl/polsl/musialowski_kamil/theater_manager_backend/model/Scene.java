@@ -12,7 +12,7 @@ public class Scene extends BaseEntity {
     @Column(name = "number", nullable = false)
     private Integer number;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "act_id", nullable = false)
     private Act act;
 
@@ -20,4 +20,28 @@ public class Scene extends BaseEntity {
     @JoinTable(name = "characters_to_scenes", joinColumns = @JoinColumn(name = "scene_id"),
     inverseJoinColumns = @JoinColumn(name = "character_id"))
     private Set<TheatreCharacter> theatreCharacters = new HashSet<>();
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Act getAct() {
+        return act;
+    }
+
+    public void setAct(Act act) {
+        this.act = act;
+    }
+
+    public Set<TheatreCharacter> getTheatreCharacters() {
+        return theatreCharacters;
+    }
+
+    public void setTheatreCharacters(Set<TheatreCharacter> theatreCharacters) {
+        this.theatreCharacters = theatreCharacters;
+    }
 }

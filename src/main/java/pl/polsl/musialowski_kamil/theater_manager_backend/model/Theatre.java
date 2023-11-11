@@ -39,6 +39,9 @@ public class Theatre extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatre")
     private Set<Hall> halls = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatre")
+    private Set<TheatreArt> arts = new HashSet<>();
+
     public Theatre() {
     }
 
@@ -120,5 +123,13 @@ public class Theatre extends BaseEntity {
 
     public void setHalls(Set<Hall> halls) {
         this.halls = halls;
+    }
+
+    public Set<TheatreArt> getArts() {
+        return arts;
+    }
+
+    public void setArts(Set<TheatreArt> arts) {
+        this.arts = arts;
     }
 }
