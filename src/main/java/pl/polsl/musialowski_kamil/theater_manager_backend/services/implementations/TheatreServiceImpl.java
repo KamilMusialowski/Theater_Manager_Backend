@@ -82,7 +82,8 @@ public class TheatreServiceImpl implements TheatreService {
         }
 
         TheatrePersonel theatrePersonel = new TheatrePersonel(user, theater, SystemRoleEnum.valueOf(role));
-        TheatrePersonelDto theatrePersonelDto = new TheatrePersonelDto(theatrePersonel.getUser().getEmail(), theatrePersonel.getTheatre().getName(), theatrePersonel.getRoleEnum());
+        theatrePersonel = theatrePersonelRepository.save(theatrePersonel);
+        TheatrePersonelDto theatrePersonelDto = theatrePersonelMapper.toDto(theatrePersonel);
         return theatrePersonelDto;
     }
 }

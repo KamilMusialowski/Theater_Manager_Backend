@@ -1,16 +1,19 @@
 package pl.polsl.musialowski_kamil.theater_manager_backend.services.implementations;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.TheaterArtDtos.TheatreArtCreatedDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.TheaterArtDtos.TheatreArtCreationDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.artInvolvedPersonelDtos.ArtInvolvedPersonelDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.ArtInvolvedPersonelMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.TheatreArtMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.*;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.enums.SystemRoleEnum;
 import pl.polsl.musialowski_kamil.theater_manager_backend.repositories.*;
 
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -26,8 +29,9 @@ public class TheatreArtService {
     private final SceneRepository sceneRepository;
     private final SystemRoleRepository systemRoleRepository;
     private final ArtInvolvedPersonelRepository artInvolvedPersonelRepository;
+    private final ArtInvolvedPersonelMapper artInvolvedPersonelMapper;
 
-    public TheatreArtService(TheatreArtRepository theatreArtRepository, TheatreArtMapper theatreArtMapper, UserRepository userRepository, TheaterRepository theaterRepository, TheatreCharacterRepository theatreCharacterRepository, ActRepository actRepository, SceneRepository sceneRepository, SystemRoleRepository systemRoleRepository, ArtInvolvedPersonelRepository artInvolvedPersonelRepository) {
+    public TheatreArtService(TheatreArtRepository theatreArtRepository, TheatreArtMapper theatreArtMapper, UserRepository userRepository, TheaterRepository theaterRepository, TheatreCharacterRepository theatreCharacterRepository, ActRepository actRepository, SceneRepository sceneRepository, SystemRoleRepository systemRoleRepository, ArtInvolvedPersonelRepository artInvolvedPersonelRepository, ArtInvolvedPersonelMapper artInvolvedPersonelMapper) {
         this.theatreArtRepository = theatreArtRepository;
         this.theatreArtMapper = theatreArtMapper;
         this.userRepository = userRepository;
@@ -37,6 +41,7 @@ public class TheatreArtService {
         this.sceneRepository = sceneRepository;
         this.systemRoleRepository = systemRoleRepository;
         this.artInvolvedPersonelRepository = artInvolvedPersonelRepository;
+        this.artInvolvedPersonelMapper = artInvolvedPersonelMapper;
     }
 
     public TheatreArtCreatedDto create(TheatreArtCreationDto theatreArtCreationDto) {
@@ -94,6 +99,17 @@ public class TheatreArtService {
         theatreArtToSave.setTheatre(theatreArt.getTheatre());
         theatreArtToSave = theatreArtRepository.save(theatreArtToSave);
         return theatreArtToSave;
+    }
+
+    public Set<ArtInvolvedPersonelDto> getDirectorsArts(Long directorId) {
+        User director = userRepository.getUserById(directorId).get();
+        SystemRole systemRole = systemRoleRepository.findBySystemRole(SystemRoleEnum.DIRECTOR).get();
+        Set<ArtInvolvedPersonel> arts = artInvolvedPersonelRepository.findArtInvolvedPersonelsByInvolvedUserAndRole(director, systemRole).get();
+        Set<ArtInvolvedPersonelDto> artsDto = new HashSet<>();
+        arts.forEach(art -> {
+            artsDto.add(artInvolvedPersonelMapper.toDto(art));
+        });
+        return artsDto;
     }
 }
 
