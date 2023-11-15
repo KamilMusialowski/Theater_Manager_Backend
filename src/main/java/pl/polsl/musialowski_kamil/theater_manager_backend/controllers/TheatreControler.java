@@ -2,10 +2,13 @@ package pl.polsl.musialowski_kamil.theater_manager_backend.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.CreatedTheatreDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelUserDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.HallDataModels.HallCreateDataModel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.TheaterPersonelDataModels.TPersonelAddModel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.TheatreDataModels.TheatreCreateModel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.services.TheatreService;
@@ -47,6 +50,18 @@ public class TheatreControler {
     public ResponseEntity<Set<TheatrePersonelUserDto>> getTheatreActors(@RequestParam Long theatreId) {
         Set<TheatrePersonelUserDto> theatrePersonelUserDtos =theatreService.getActors(theatreId);
         return ResponseEntity.ok(theatrePersonelUserDtos);
+    }
+
+    @PostMapping("/createHall")
+    public ResponseEntity<HallDto> createHall(@RequestBody HallCreateDataModel hallCreateDataModel) {
+        HallDto addedHall = theatreService.addHall(hallCreateDataModel.getHallModel(), hallCreateDataModel.getTheaterId());
+        return ResponseEntity.created(URI.create("/halls" + addedHall.id())).body(addedHall);
+    }
+
+    @GetMapping("/getHalls")
+    public ResponseEntity<Set<HallListDto>> getTheaterHalls(@RequestParam Long theaterId) {
+        Set<HallListDto> hallListDtos = theatreService.getTheatersHalls(theaterId);
+        return ResponseEntity.ok(hallListDtos);
     }
 
 }

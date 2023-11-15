@@ -1,17 +1,23 @@
 package pl.polsl.musialowski_kamil.theater_manager_backend.services.implementations;
 
 import org.springframework.stereotype.Service;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallCreateDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.CreatedTheatreDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreCreateDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelUserDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.HallMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.TheatreMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.TheatrePersonelMapper;
+import pl.polsl.musialowski_kamil.theater_manager_backend.model.Hall;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.Theatre;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.TheatrePersonel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.User;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.enums.SystemRoleEnum;
+import pl.polsl.musialowski_kamil.theater_manager_backend.repositories.HallRepository;
 import pl.polsl.musialowski_kamil.theater_manager_backend.repositories.TheaterRepository;
 import pl.polsl.musialowski_kamil.theater_manager_backend.repositories.TheatrePersonelRepository;
 import pl.polsl.musialowski_kamil.theater_manager_backend.repositories.UserRepository;
@@ -29,17 +35,20 @@ public class TheatreServiceImpl implements TheatreService {
     private final UserRepository userRepository;
     private final TheaterRepository theaterRepository;
     private final TheatrePersonelRepository theatrePersonelRepository;
+    private final HallRepository hallRepository;
     private final TheatreMapper theatreMapper;
     private final TheatrePersonelMapper theatrePersonelMapper;
+    private final HallMapper hallMapper;
 
-    public TheatreServiceImpl(UserRepository userRepository, TheaterRepository theaterRepository, TheatrePersonelRepository theatrePersonelRepository, TheatreMapper theatreMapper, TheatrePersonelMapper theatrePersonelMapper) {
+    public TheatreServiceImpl(UserRepository userRepository, TheaterRepository theaterRepository, TheatrePersonelRepository theatrePersonelRepository, HallRepository hallRepository, TheatreMapper theatreMapper, TheatrePersonelMapper theatrePersonelMapper, HallMapper hallMapper) {
         this.userRepository = userRepository;
         this.theaterRepository = theaterRepository;
         this.theatrePersonelRepository = theatrePersonelRepository;
+        this.hallRepository = hallRepository;
         this.theatreMapper = theatreMapper;
         this.theatrePersonelMapper = theatrePersonelMapper;
+        this.hallMapper = hallMapper;
     }
-
 
     @Override
     public CreatedTheatreDto create(Long creatorId, TheatreCreateDto theatreCreateDto) {
@@ -97,5 +106,33 @@ public class TheatreServiceImpl implements TheatreService {
             theatrePersonelUserDtos.add(theatrePersonelMapper.toDto1(personel));
         });
         return theatrePersonelUserDtos;
+    }
+
+    @Override
+    public HallDto addHall(HallCreateDto hallCreateDto, Long theaterId) {
+        Optional<Theatre> theatreOptional = theaterRepository.getTheatreById(theaterId);
+        Theatre theater = null;
+        if (theatreOptional.isPresent()) {
+            theater = theatreOptional.get();
+        }
+        Hall hall = hallMapper.toEntity(hallCreateDto);
+        hall.setTheatre(theater);
+        hall = hallRepository.save(hall);
+        return hallMapper.toDto1(hall);
+    }
+
+    @Override
+    public Set<HallListDto> getTheatersHalls(Long theaterId) {
+        Optional<Theatre> theatreOptional = theaterRepository.getTheatreById(theaterId);
+        Theatre theater = null;
+        if (theatreOptional.isPresent()) {
+            theater = theatreOptional.get();
+        }
+        Set<Hall> halls = hallRepository.findHallsByTheatre(theater).get();
+        Set<HallListDto> result = new HashSet<>();
+        halls.forEach(hall -> {
+            result.add(hallMapper.toDto2(hall));
+        });
+        return result;
     }
 }
