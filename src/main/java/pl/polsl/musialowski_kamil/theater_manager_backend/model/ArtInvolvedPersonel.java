@@ -8,19 +8,19 @@ import java.util.Optional;
 @Table(name = "art_involved_personel")
 public class ArtInvolvedPersonel extends BaseEntity{
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "theatre_art_id", nullable = false)
     private TheatreArt theatreArt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User involvedUser;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private SystemRole role;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "character_id")
     private TheatreCharacter character;
 

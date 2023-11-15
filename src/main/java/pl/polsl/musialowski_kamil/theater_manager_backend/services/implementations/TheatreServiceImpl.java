@@ -5,6 +5,7 @@ import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.Creat
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreCreateDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelUserDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.TheatreMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.TheatrePersonelMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.Theatre;
@@ -38,7 +39,6 @@ public class TheatreServiceImpl implements TheatreService {
         this.theatreMapper = theatreMapper;
         this.theatrePersonelMapper = theatrePersonelMapper;
     }
-
 
 
     @Override
@@ -85,5 +85,17 @@ public class TheatreServiceImpl implements TheatreService {
         theatrePersonel = theatrePersonelRepository.save(theatrePersonel);
         TheatrePersonelDto theatrePersonelDto = theatrePersonelMapper.toDto(theatrePersonel);
         return theatrePersonelDto;
+    }
+
+    @Override
+    public Set<TheatrePersonelUserDto> getActors(Long theatreId) {
+        Set<TheatrePersonel> theatrePersonels = theatrePersonelRepository.findTheatrePersonelsByTheatre_Id(theatreId).get();
+        Set<TheatrePersonelUserDto> theatrePersonelUserDtos = new HashSet<>();
+        theatrePersonels.stream().filter(personel -> {
+            return personel.getRoleEnum().label.equals("ACTOR");
+        }).forEach(personel -> {
+            theatrePersonelUserDtos.add(theatrePersonelMapper.toDto1(personel));
+        });
+        return theatrePersonelUserDtos;
     }
 }

@@ -32,7 +32,7 @@ public class User extends BaseEntity {
     @Column(name = "sex", nullable = false, length = 10)
     private SexEnum sex;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "system_roles_to_users", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "system_role_id"))
     private Set<SystemRole> systemRoles = new HashSet<>();
@@ -43,7 +43,7 @@ public class User extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "involvedUser")
     private Set<ArtInvolvedPersonel> involvedArts = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "users_to_events", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private Set<EventReservations> events = new HashSet<>();

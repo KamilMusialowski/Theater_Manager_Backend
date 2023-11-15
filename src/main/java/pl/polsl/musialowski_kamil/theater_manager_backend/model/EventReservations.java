@@ -16,18 +16,18 @@ public class EventReservations extends BaseEntity {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "event_type_id")
     private EventType eventType;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "theatre_art_id")
     private TheatreArt theatreArt;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "events")
+    @ManyToMany(mappedBy = "events")
     private Set<User> users = new HashSet<>();
 }

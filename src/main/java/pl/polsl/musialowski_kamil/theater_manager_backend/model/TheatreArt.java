@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NamedEntityGraph(name = "Theater.detail", attributeNodes = @NamedAttributeNode("acts"))
 @Table(name = "theatre_art")
 public class TheatreArt extends BaseEntity{
 
@@ -26,16 +25,16 @@ public class TheatreArt extends BaseEntity{
     @JoinColumn(name = "inputing_user_id", nullable = false)
     private User inputingUser;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
     private Set<EventReservations> eventReservations = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
     private Set<ArtInvolvedPersonel> involvedPersonel = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
     private Set<Act> acts = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
     private Set<TheatreCharacter> characters = new HashSet<>();
 
     @ManyToOne

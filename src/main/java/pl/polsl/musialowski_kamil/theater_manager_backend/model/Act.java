@@ -15,11 +15,11 @@ public class Act extends BaseEntity {
     @Column(name = "title", length = 80)
     private String title;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "theatre_art_id", nullable = false)
     private TheatreArt theatreArt;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "act", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "act")
     private Set<Scene> scenes = new HashSet<>();
 
     public Integer getNumber() {

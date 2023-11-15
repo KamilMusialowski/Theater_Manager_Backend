@@ -3,9 +3,10 @@ package pl.polsl.musialowski_kamil.theater_manager_backend.mappers;
 import org.mapstruct.*;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.TheaterArtDtos.TheatreArtCreatedDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.TheaterArtDtos.TheatreArtCreationDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.TheaterArtDtos.TheatreArtDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.TheatreArt;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {TheatreMapper.class})
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {TheatreMapper.class, ArtInvolvedPersonelMapper.class, TheatreCharacterMapper.class})
 public interface TheatreArtMapper {
     TheatreArt toEntity(TheatreArtCreationDto theatreArtCreationDto);
 
@@ -30,4 +31,16 @@ public interface TheatreArtMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     TheatreArt partialUpdate(TheatreArtCreatedDto theatreArtCreatedDto, @MappingTarget TheatreArt theatreArt);
+
+    TheatreArt toEntity(TheatreArtDto theatreArtDto);
+
+    @AfterMapping
+    default void linkInvolvedPersonel(@MappingTarget TheatreArt theatreArt) {
+        theatreArt.getInvolvedPersonel().forEach(involvedPersonel -> involvedPersonel.setTheatreArt(theatreArt));
+    }
+
+    TheatreArtDto toDto2(TheatreArt theatreArt);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    TheatreArt partialUpdate(TheatreArtDto theatreArtDto, @MappingTarget TheatreArt theatreArt);
 }

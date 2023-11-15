@@ -5,8 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.TheaterArtDtos.TheatreArtCreatedDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.TheaterArtDtos.TheatreArtCreationDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.TheaterArtDtos.TheatreArtDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.artInvolvedPersonelDtos.ArtInvolvedPersonelDto;
-import pl.polsl.musialowski_kamil.theater_manager_backend.services.implementations.TheatreArtService;
+import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.ArtInvolvedPersonelModels.ActorCharacterAssigned;
+import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.ArtInvolvedPersonelModels.ActorCharacterAssignedModel;
+import pl.polsl.musialowski_kamil.theater_manager_backend.services.TheatreArtService;
 
 import java.net.URI;
 import java.util.Set;
@@ -31,5 +34,18 @@ public class TheatreArtController {
     public ResponseEntity<Set<ArtInvolvedPersonelDto>> getDirectorsArtToGrid(@RequestParam Long directorId) {
         Set<ArtInvolvedPersonelDto> arts = theatreArtService.getDirectorsArts(directorId);
         return ResponseEntity.ok(arts);
+    }
+
+    @GetMapping("/get_art")
+    public ResponseEntity<TheatreArtDto> getTheaterArt(@RequestParam Long artId) {
+        TheatreArtDto art = theatreArtService.getArt(artId);
+        return ResponseEntity.ok(art);
+    }
+
+    @PostMapping("/assign_roles")
+    public ResponseEntity<Set<ArtInvolvedPersonelDto>> assignRolesToActors(@RequestBody ActorCharacterAssignedModel actorCharacterAssignedModel) {
+        ActorCharacterAssignedModel test = actorCharacterAssignedModel;
+        Set<ArtInvolvedPersonelDto> response = theatreArtService.assignActorsToRoles(actorCharacterAssignedModel);
+        return ResponseEntity.created(URI.create("/assigned_roles")).body(response);
     }
 }

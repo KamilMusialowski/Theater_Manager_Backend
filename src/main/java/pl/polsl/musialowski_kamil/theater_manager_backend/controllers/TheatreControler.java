@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.CreatedTheatreDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelUserDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.TheaterPersonelDataModels.TPersonelAddModel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.TheatreDataModels.TheatreCreateModel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.services.TheatreService;
@@ -40,6 +41,12 @@ public class TheatreControler {
     public ResponseEntity<TheatrePersonelDto> addTheatrePersonel(@RequestBody TPersonelAddModel tPersonelAddModel) {
         TheatrePersonelDto addedPersonel = theatreService.addPersonel(tPersonelAddModel.personelEmail(), tPersonelAddModel.theaterId(), tPersonelAddModel.role());
         return ResponseEntity.ok(addedPersonel);
+    }
+
+    @GetMapping("/getActors")
+    public ResponseEntity<Set<TheatrePersonelUserDto>> getTheatreActors(@RequestParam Long theatreId) {
+        Set<TheatrePersonelUserDto> theatrePersonelUserDtos =theatreService.getActors(theatreId);
+        return ResponseEntity.ok(theatrePersonelUserDtos);
     }
 
 }

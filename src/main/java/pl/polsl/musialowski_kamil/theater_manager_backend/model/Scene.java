@@ -12,11 +12,11 @@ public class Scene extends BaseEntity {
     @Column(name = "number", nullable = false)
     private Integer number;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "act_id", nullable = false)
     private Act act;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "characters_to_scenes", joinColumns = @JoinColumn(name = "scene_id"),
     inverseJoinColumns = @JoinColumn(name = "character_id"))
     private Set<TheatreCharacter> theatreCharacters = new HashSet<>();
