@@ -4,11 +4,9 @@ import org.springframework.stereotype.Service;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallCreateDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallListDto;
-import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.CreatedTheatreDto;
-import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreCreateDto;
-import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreDirectorDto;
-import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.*;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelUserDto;
 
 import java.util.Set;
@@ -26,4 +24,12 @@ public interface TheatreService {
     HallDto addHall(HallCreateDto hallCreateDto, Long theaterId);
 
     Set<HallListDto> getTheatersHalls(Long theaterId);
+
+    CreatedTheatreDto getTheater(Long theaterId);
+
+    CreatedTheatreDto editTheater(TheatreEditDto theatreEditDto);
+
+    Set<TheatrePersonelListDto> getPersonel(Long theaterId);
+
+    Long deletePersonel(Long personelId);
 }

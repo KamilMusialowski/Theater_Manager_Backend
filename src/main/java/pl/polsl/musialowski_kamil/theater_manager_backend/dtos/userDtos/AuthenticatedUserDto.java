@@ -1,5 +1,6 @@
 package pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos;
 
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.eventReservationDtos.EventReservationsDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.systemRoleDtos.SystemRoleDto;
 
 import java.io.Serializable;
@@ -8,9 +9,6 @@ import java.util.Set;
 /**
  * DTO for {@link pl.polsl.musialowski_kamil.theater_manager_backend.model.User}
  */
-//public record AuthenticatedUserDto(Long id, String firstName1, String token, Set<SystemRoleDto> systemRoles,
-//                                   Set<EventReservationsDto> events) implements Serializable {
-//}
 
 public class AuthenticatedUserDto {
     private Long id;

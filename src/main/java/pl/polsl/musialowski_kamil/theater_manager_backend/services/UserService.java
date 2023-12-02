@@ -14,4 +14,6 @@ public interface UserService {
     UserAllDto register(RegistryDto registryDto);
 
     Set<User> getUsers();
+
+    UserListDto changePassword(Long userId, String newPassword);
 }

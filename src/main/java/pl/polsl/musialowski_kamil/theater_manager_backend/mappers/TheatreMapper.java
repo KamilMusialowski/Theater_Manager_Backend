@@ -3,6 +3,7 @@ package pl.polsl.musialowski_kamil.theater_manager_backend.mappers;
 import org.mapstruct.*;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.CreatedTheatreDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreCreateDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreEditDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.Theatre;
 
@@ -28,4 +29,11 @@ public interface TheatreMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Theatre partialUpdate(TheatresListDto theatresListDto, @MappingTarget Theatre theatre);
+
+    Theatre toEntity(TheatreEditDto theatreEditDto);
+
+    TheatreEditDto toDto(Theatre theatre);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Theatre partialUpdate(TheatreEditDto theatreEditDto, @MappingTarget Theatre theatre);
 }

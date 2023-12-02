@@ -133,11 +133,20 @@ public class TheatreArtServiceImpl implements TheatreArtService {
             User user = userRepository.findById(a.getActorId()).get();
             TheatreCharacter theatreCharacter = theatreCharacterRepository.getTheatreCharacterByNameAndTheatreArt(a.getCharacter(), art).get();
             SystemRole role = systemRoleRepository.findBySystemRole(SystemRoleEnum.ACTOR).get();
-            ArtInvolvedPersonel artInvolvedPersonel = new ArtInvolvedPersonel(art, user, role, theatreCharacter);
+            Long id = a.getId();
+            ArtInvolvedPersonel artInvolvedPersonel = new ArtInvolvedPersonel(id, art, user, role, theatreCharacter);
             artInvolvedPersonel = artInvolvedPersonelRepository.save(artInvolvedPersonel);
             result.add(artInvolvedPersonelMapper.toDto(artInvolvedPersonel));
         });
         return result;
+    }
+
+    @Override
+    public Set<ArtInvolvedPersonelDto> getRolesAssigment(Long artId) {
+        TheatreArt art = theatreArtRepository.findById(artId).get();
+        Set<ArtInvolvedPersonel> resultEntities = artInvolvedPersonelRepository.findArtInvolvedPersonelsByTheatreArt(art).get();
+        Set<ArtInvolvedPersonelDto> resultDtos = resultEntities.stream().map(artInvolvedPersonelMapper::toDto).collect(Collectors.toSet());
+        return resultDtos;
     }
 }
 

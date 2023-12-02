@@ -20,7 +20,7 @@ public class Hall extends BaseEntity {
     private Theatre theatre;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hall")
-    private Set<EventReservations> eventReservations = new HashSet<>();
+    private Set<EventReservation> eventReservations = new HashSet<>();
 
     public String getName() {
         return name;
@@ -46,11 +46,11 @@ public class Hall extends BaseEntity {
         this.theatre = theatre;
     }
 
-    public Set<EventReservations> getEventReservations() {
+    public Set<EventReservation> getEventReservations() {
         return eventReservations;
     }
 
-    public void setEventReservations(Set<EventReservations> eventReservations) {
+    public void setEventReservations(Set<EventReservation> eventReservations) {
         this.eventReservations = eventReservations;
     }
 }

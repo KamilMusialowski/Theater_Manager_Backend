@@ -44,8 +44,13 @@ public class TheatreArtController {
 
     @PostMapping("/assign_roles")
     public ResponseEntity<Set<ArtInvolvedPersonelDto>> assignRolesToActors(@RequestBody ActorCharacterAssignedModel actorCharacterAssignedModel) {
-        ActorCharacterAssignedModel test = actorCharacterAssignedModel;
         Set<ArtInvolvedPersonelDto> response = theatreArtService.assignActorsToRoles(actorCharacterAssignedModel);
         return ResponseEntity.created(URI.create("/assigned_roles")).body(response);
+    }
+
+    @GetMapping("/rolesAssigment")
+    public ResponseEntity<Set<ArtInvolvedPersonelDto>> getRolesAssigment(@RequestParam Long artId) {
+        Set<ArtInvolvedPersonelDto> response = theatreArtService.getRolesAssigment(artId);
+        return ResponseEntity.ok(response);
     }
 }

@@ -45,8 +45,8 @@ public class User extends BaseEntity {
 
     @ManyToMany
     @JoinTable(name = "users_to_events", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
-    private Set<EventReservations> events = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "event_reservations_id"))
+    private Set<EventReservation> events = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<TheatrePersonel> theatresPositions = new HashSet<>();
@@ -146,11 +146,11 @@ public class User extends BaseEntity {
         this.involvedArts = involvedArts;
     }
 
-    public Set<EventReservations> getEvents() {
+    public Set<EventReservation> getEvents() {
         return events;
     }
 
-    public void setEvents(Set<EventReservations> events) {
+    public void setEvents(Set<EventReservation> events) {
         this.events = events;
     }
 

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos.CredentialsDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos.RegistryDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos.UserAllDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.userDtos.UserListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.exceptions.AppException;
+import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.EventReservationsMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.UserMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.SystemRole;
 import pl.polsl.musialowski_kamil.theater_manager_backend.model.User;
@@ -20,7 +22,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,6 +30,16 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final SystemRoleService systemRoleService;
+    private final EventReservationsMapper eventReservationsMapper;
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, SystemRoleService systemRoleService,
+                           EventReservationsMapper eventReservationsMapper) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
+        this.systemRoleService = systemRoleService;
+        this.eventReservationsMapper = eventReservationsMapper;
+    }
 
     @Override
     public UserAllDto login(CredentialsDto credentialsDto) {
@@ -76,10 +87,10 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, SystemRoleService systemRoleService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userMapper = userMapper;
-        this.systemRoleService = systemRoleService;
+    @Override
+    public UserListDto changePassword(Long userId, String newPassword) {
+        User user = this.userRepository.getUserById(userId).get();
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(newPassword)));
+        return userMapper.toDto(this.userRepository.save(user));
     }
 }

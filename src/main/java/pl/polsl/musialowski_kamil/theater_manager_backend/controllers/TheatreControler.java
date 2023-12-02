@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.CreatedTheatreDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreEditDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelUserDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.HallDataModels.HallCreateDataModel;
 import pl.polsl.musialowski_kamil.theater_manager_backend.requestsDataModels.TheaterPersonelDataModels.TPersonelAddModel;
@@ -64,4 +66,27 @@ public class TheatreControler {
         return ResponseEntity.ok(hallListDtos);
     }
 
+    @GetMapping("/getTheater")
+    public ResponseEntity<CreatedTheatreDto> getTheater(@RequestParam Long theaterId) {
+        CreatedTheatreDto result = this.theatreService.getTheater(theaterId);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/editTheater")
+    public ResponseEntity<CreatedTheatreDto> editTheater(@RequestBody TheatreEditDto theatreEditDto) {
+        CreatedTheatreDto result = this.theatreService.editTheater(theatreEditDto);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/getPersonel")
+    public ResponseEntity<Set<TheatrePersonelListDto>> getPersonel(@RequestParam Long theaterId) {
+        Set<TheatrePersonelListDto> personel = this.theatreService.getPersonel(theaterId);
+        return ResponseEntity.ok(personel);
+    }
+
+    @GetMapping("/deletePersonel")
+    public ResponseEntity<Long> deletePersonel(@RequestParam Long personelId) {
+        this.theatreService.deletePersonel(personelId);
+        return ResponseEntity.ok(personelId);
+    }
 }

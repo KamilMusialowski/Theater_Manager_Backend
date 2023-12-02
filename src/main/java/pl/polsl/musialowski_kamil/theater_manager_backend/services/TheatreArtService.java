@@ -19,4 +19,6 @@ public interface TheatreArtService {
     TheatreArtDto getArt(Long artId);
 
     Set<ArtInvolvedPersonelDto> assignActorsToRoles(ActorCharacterAssignedModel actorCharacterAssignedModel);
+
+    Set<ArtInvolvedPersonelDto> getRolesAssigment(Long artId);
 }

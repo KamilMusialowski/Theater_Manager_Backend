@@ -6,8 +6,10 @@ import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.hallDtos.HallListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.CreatedTheatreDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreCreateDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatreEditDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatreDtos.TheatresListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelDto;
+import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelListDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.dtos.theatrePersonelDtos.TheatrePersonelUserDto;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.HallMapper;
 import pl.polsl.musialowski_kamil.theater_manager_backend.mappers.TheatreMapper;
@@ -134,5 +136,30 @@ public class TheatreServiceImpl implements TheatreService {
             result.add(hallMapper.toDto2(hall));
         });
         return result;
+    }
+
+    @Override
+    public CreatedTheatreDto getTheater(Long theaterId) {
+        return this.theatreMapper.toDto2(this.theaterRepository.findById(theaterId).get());
+    }
+
+    @Override
+    public CreatedTheatreDto editTheater(TheatreEditDto theatreEditDto) {
+        Theatre theatre = theatreMapper.toEntity(theatreEditDto);
+        return this.theatreMapper.toDto2(theaterRepository.save(theatre));
+    }
+
+    @Override
+    public Set<TheatrePersonelListDto> getPersonel(Long theaterId) {
+        Set<TheatrePersonel> theatrePersonels = theatrePersonelRepository.findTheatrePersonelsByTheatre_Id(theaterId).get();
+        Set<TheatrePersonelListDto> result = theatrePersonels.stream().map(theatrePersonelMapper::toDto2).collect(Collectors.toSet());
+        return result;
+    }
+
+    @Override
+    public Long deletePersonel(Long personelId) {
+        TheatrePersonel theatrePersonel = theatrePersonelRepository.findById(personelId).get();
+        theatrePersonelRepository.delete(theatrePersonel);
+        return theatrePersonel.getId();
     }
 }

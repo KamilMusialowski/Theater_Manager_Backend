@@ -26,7 +26,7 @@ public class TheatreArt extends BaseEntity{
     private User inputingUser;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
-    private Set<EventReservations> eventReservations = new HashSet<>();
+    private Set<EventReservation> eventReservations = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "theatreArt")
     private Set<ArtInvolvedPersonel> involvedPersonel = new HashSet<>();
@@ -44,7 +44,7 @@ public class TheatreArt extends BaseEntity{
     public TheatreArt() {
     }
 
-    public TheatreArt(Long id, String title, String author1, String author2, String author3, User inputingUser, Set<EventReservations> eventReservations, Set<ArtInvolvedPersonel> involvedPersonel, Set<Act> acts, Set<TheatreCharacter> characters, Theatre theatre) {
+    public TheatreArt(Long id, String title, String author1, String author2, String author3, User inputingUser, Set<EventReservation> eventReservations, Set<ArtInvolvedPersonel> involvedPersonel, Set<Act> acts, Set<TheatreCharacter> characters, Theatre theatre) {
         super(id);
         this.title = title;
         this.author1 = author1;
@@ -98,11 +98,11 @@ public class TheatreArt extends BaseEntity{
         this.inputingUser = inputingUser;
     }
 
-    public Set<EventReservations> getEventReservations() {
+    public Set<EventReservation> getEventReservations() {
         return eventReservations;
     }
 
-    public void setEventReservations(Set<EventReservations> eventReservations) {
+    public void setEventReservations(Set<EventReservation> eventReservations) {
         this.eventReservations = eventReservations;
     }
 
